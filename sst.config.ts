@@ -1,14 +1,25 @@
+import { Tags } from 'aws-cdk-lib';
 import { SSTConfig } from 'sst';
-import { API } from './stacks/MyStack';
+import { Website } from './stacks/Website';
+
+export const APP_NAME = 'mate-bar';
 
 export default {
   config(_input) {
     return {
-      name: 'my-sst-app',
-      region: 'us-east-1',
+      name: 'etc',
+      region: 'eu-west-1',
     };
   },
   stacks(app) {
-    app.stack(API);
+    Tags.of(app).add('project', APP_NAME);
+    Tags.of(app).add('env', app.stage);
+
+    const isProd = app.stage === 'prod';
+    if (!isProd) {
+      app.setDefaultRemovalPolicy('destroy');
+    }
+
+    app.stack(Website);
   },
 } satisfies SSTConfig;
