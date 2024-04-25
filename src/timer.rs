@@ -31,20 +31,16 @@ pub fn Timer() -> Element {
     rsx! {
         div { class: "flex text-2xl mb-6",
             div { class: "mr-2",
-                span { class: "font-semibold", id: "days", "{remaining_days}" }
-                " :"
+                span { class: "text-8xl font-semibold", id: "days", "{remaining_days}" }
             }
             div { class: "mr-2",
-                span { class: "font-semibold", id: "hours", "{remaining_hours}" }
-                " :"
+                span { class: "text-8xl font-semibold", id: "hours", " : {remaining_hours}" }
             }
             div { class: "mr-2",
-                span { class: "font-semibold", id: "minutes", "{remaining_minutes}" }
-                " :"
+                span { class: "text-8xl font-semibold", id: "minutes", " : {remaining_minutes}" }
             }
             div {
-                span { class: "font-semibold", id: "seconds", "{remaining_seconds}" }
-                ""
+                span { class: "text-8xl font-semibold", id: "seconds", "  : {remaining_seconds}" }
             }
         }
     }
