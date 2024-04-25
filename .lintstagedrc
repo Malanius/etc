@@ -1,0 +1,7 @@
+{
+  "*.{js,ts}": [
+    "prettier --write --ignore-unknown",
+    "eslint --fix",
+    "sst bind vitest run --bail --coverage=false --passWithNoTests"
+  ]
+}

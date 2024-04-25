@@ -16,7 +16,7 @@ asset_dir = "assets"
 [web.app]
 
 # HTML title tag content
-title = "elevup-terror-countdown"
+title = "elevup terror countdown"
 
 [web.watcher]
 
