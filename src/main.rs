@@ -4,9 +4,11 @@ use dioxus::prelude::*;
 use log::LevelFilter;
 
 mod timer;
+mod terrors;
 
 mod prelude {
     pub use crate::timer::*;
+    pub use crate::terrors::*;
 }
 
 use prelude::*;
@@ -26,8 +28,9 @@ fn main() {
 fn App() -> Element {
     rsx! {
         div { class: "bg-black h-screen flex flex-col items-center justify-center text-white",
-            h2 { class: "text-2xl font-bold mb-6", "The terror of" }
-            h2 { class: "text-2xl font-bold mb-6", "starts in:" }
+            h2 { class: "text-2xl font-bold mb-6", "The terrors of" }
+            Terror {}
+            h2 { class: "text-2xl font-bold mb-6", "will start in:" }
             Timer {}
         }
     }

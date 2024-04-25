@@ -18,3 +18,5 @@ manganis = "0.2.2"
 chrono = { version = "0.4.38", features = ["serde"] }
 serde = { version = "1.0.198", features = ["derive"] }
 futures-timer = { version = "3.0.3", features = ["wasm-bindgen"] }
+rand = "0.8.5"
+getrandom = { version = "0.2.14", features = ["js"] }
