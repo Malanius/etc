@@ -1,7 +1,10 @@
 #![allow(non_snake_case)]
 
+use std::time::Duration;
+
 use chrono::{DateTime, Utc};
 use dioxus::prelude::*;
+use futures_timer::Delay;
 use log::LevelFilter;
 
 // Urls are relative to your Cargo.toml file
@@ -19,10 +22,20 @@ const DEADLINE: &str = "2024-05-11T00:00:00Z";
 
 #[component]
 fn App() -> Element {
+    let time = use_signal(|| chrono::Utc::now().to_string());
     let deadline: DateTime<Utc> = DEADLINE.parse().expect("failed to parse deadline");
-    // let now = use_signal(|| chrono::Utc::now());
-    let now = chrono::Utc::now();
 
+    use_effect(move || {
+        let mut time = time.clone();
+        spawn(async move {
+            loop {
+                Delay::new(Duration::from_secs(1)).await;
+                time.set(chrono::Utc::now().to_string());
+            }
+        });
+    });
+
+    let now: DateTime<Utc> = time.read().parse().expect("failed to parse time");
     let delta = deadline - now;
     let remaining_days = format!("{:02}", delta.num_days());
     let remaining_hours = format!("{:02}", delta.num_hours() % 24);
