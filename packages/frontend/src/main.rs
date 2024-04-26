@@ -30,7 +30,7 @@ fn App() -> Element {
         div { class: "bg-black h-screen flex flex-col items-center justify-center text-white",
             h2 { class: "text-2xl font-bold mb-6", "The terrors of" }
             Terror {}
-            h2 { class: "text-2xl font-bold mb-6", "will start in:" }
+            h2 { class: "text-2xl font-bold mb-6", "begin in:" }
             Timer {}
         }
     }
