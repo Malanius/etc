@@ -84,6 +84,8 @@ pub fn Terror() -> Element {
     let terror = TERRORS.choose(&mut rng).unwrap();
 
     rsx! {
-        h1 { class: "text-4xl font-bold mb-6", "{terror}" }
+        h1 { class: "text-xl sm:text-2xl md:text-4xl font-bold mb-3 sm:mb-4 md:mb-6",
+            "{terror}"
+        }
     }
 }

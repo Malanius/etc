@@ -29,18 +29,34 @@ pub fn Timer() -> Element {
     let remaining_seconds = format!("{:02}", delta.num_seconds() % 60);
 
     rsx! {
-        div { class: "flex text-2xl mb-6",
-            div { class: "mr-2",
-                span { class: "text-8xl font-semibold", id: "days", "{remaining_days}" }
+        div { class: "flex justify-center text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-6",
+            div { class: "w-1/4 min-w-max",
+                span {
+                    class: "text-4xl sm:text-6xl md:text-8xl font-semibold",
+                    id: "days",
+                    "{remaining_days}"
+                }
             }
-            div { class: "mr-2",
-                span { class: "text-8xl font-semibold", id: "hours", " : {remaining_hours}" }
+            div { class: "w-1/4 min-w-max",
+                span {
+                    class: "text-4xl sm:text-6xl md:text-8xl font-semibold",
+                    id: "hours",
+                    " : {remaining_hours}"
+                }
             }
-            div { class: "mr-2",
-                span { class: "text-8xl font-semibold", id: "minutes", " : {remaining_minutes}" }
+            div { class: "w-1/4 min-w-max",
+                span {
+                    class: "text-4xl sm:text-6xl md:text-8xl font-semibold",
+                    id: "minutes",
+                    " : {remaining_minutes}"
+                }
             }
-            div {
-                span { class: "text-8xl font-semibold", id: "seconds", "  : {remaining_seconds}" }
+            div { class: "w-1/4 min-w-max",
+                span {
+                    class: "text-4xl sm:text-6xl md:text-8xl font-semibold",
+                    id: "seconds",
+                    "  : {remaining_seconds}"
+                }
             }
         }
     }

@@ -27,10 +27,14 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        div { class: "bg-black h-screen flex flex-col items-center justify-center text-white",
-            h2 { class: "text-2xl font-bold mb-6", "The terrors of" }
+        div { class: "bg-black h-screen flex flex-col items-center justify-center text-white px-2",
+            h2 { class: "text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6",
+                "The terrors of"
+            }
             Terror {}
-            h2 { class: "text-2xl font-bold mb-6", "begin in:" }
+            h2 { class: "text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6",
+                "begin in:"
+            }
             Timer {}
         }
     }
