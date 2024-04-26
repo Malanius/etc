@@ -18,5 +18,6 @@ export function Website({ stack }: StackContext) {
     buildOutput: 'dist',
     buildCommand: 'rm -r dist/ && dx build --release',
     customDomain,
+    waitForInvalidation: stack.stage === 'prod',
   });
 }
