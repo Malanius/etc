@@ -16,8 +16,16 @@ export function Website({ stack }: StackContext) {
   new StaticSite(stack, 'web', {
     path: 'packages/frontend',
     buildOutput: 'dist',
-    buildCommand: 'rm -r dist/ && dx build --release',
+    buildCommand: 'rm -fr dist/ && dx build --release',
     customDomain,
     waitForInvalidation: stack.stage === 'prod',
+    assets: {
+      fileOptions: [
+        {
+          files: '**',
+          cacheControl: 'max-age=0,no-cache,no-store,must-revalidate',
+        },
+      ],
+    },
   });
 }
