@@ -14,6 +14,17 @@ struct TimerDigitProps {
     useSeparator: bool,
 }
 
+fn calculate_color(hours_left: usize) -> f32 {
+    if hours_left > 336 {
+        return 120.0;
+    }
+
+    let hue_start = 120.0; // Green
+    let hue_end = 0.0; // Red
+
+    hue_start - (hue_start - hue_end) * ((336 - hours_left) as f32 / 336.0)
+}
+
 #[component]
 fn TimerDigit(props: TimerDigitProps) -> Element {
     let TimerDigitProps {
@@ -45,6 +56,10 @@ pub fn Timer() -> Element {
             loop {
                 Delay::new(Duration::from_secs(1)).await;
                 time.set(chrono::Utc::now().to_string());
+                // Move by day each second for testing purposes
+                // let virtual_clock: DateTime<Utc> =
+                //     time.read().parse().expect("failed to parse time");
+                // time.set((virtual_clock + chrono::Duration::days(1)).to_string());
             }
         });
     });
@@ -56,8 +71,16 @@ pub fn Timer() -> Element {
     let remaining_minutes = format!("{:02}", delta.num_minutes() % 60);
     let remaining_seconds = format!("{:02}", delta.num_seconds() % 60);
 
+    let counter_hue = calculate_color(delta.num_hours() as usize);
+    let counter_saturation = 100; // Full saturation
+    let counter_lightness = 50; // Normal lightness
+    let timer_style =
+        format!("color: hsl({counter_hue}, {counter_saturation}%, {counter_lightness}%);");
+
     rsx! {
-        div { class: "flex justify-center text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-6",
+        div {
+            style: "{timer_style}",
+            class: "flex justify-center text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-6",
             TimerDigit { value: remaining_days, label: "days", useSeparator: false }
             TimerDigit { value: remaining_hours, label: "hours", useSeparator: true }
             TimerDigit { value: remaining_minutes, label: "minutes", useSeparator: true }
