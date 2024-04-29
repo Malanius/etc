@@ -5,10 +5,12 @@ use log::LevelFilter;
 
 mod timer;
 mod terrors;
+mod timer_digit;
 
 mod prelude {
     pub use crate::timer::*;
     pub use crate::terrors::*;
+    pub use crate::timer_digit::*;
 }
 
 use prelude::*;

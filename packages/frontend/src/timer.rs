@@ -4,15 +4,10 @@ use std::time::Duration;
 use chrono::{DateTime, Utc};
 use dioxus::prelude::*;
 use futures_timer::Delay;
+use crate::prelude::*;
 
 const DEADLINE: &str = "2024-05-11T00:00:00Z";
 
-#[derive(Props, Clone, PartialEq)]
-struct TimerDigitProps {
-    value: String,
-    label: String,
-    useSeparator: bool,
-}
 
 fn calculate_color(hours_left: usize) -> f32 {
     if hours_left > 336 {
@@ -25,25 +20,7 @@ fn calculate_color(hours_left: usize) -> f32 {
     hue_start - (hue_start - hue_end) * ((336 - hours_left) as f32 / 336.0)
 }
 
-#[component]
-fn TimerDigit(props: TimerDigitProps) -> Element {
-    let TimerDigitProps {
-        value,
-        label,
-        useSeparator,
-    } = props;
-    let separator = if useSeparator { ": " } else { "" };
 
-    rsx! {
-        div { class: "w-1/4 min-w-max",
-            span {
-                class: "text-4xl sm:text-6xl md:text-8xl font-semibold",
-                id: "{label}",
-                "{separator}{value}"
-            }
-        }
-    }
-}
 
 #[component]
 pub fn Timer() -> Element {
