@@ -14,7 +14,7 @@ pub fn TimerDigit(props: TimerDigitProps) -> Element {
         label,
         useSeparator,
     } = props;
-    let separator = if useSeparator { ": " } else { "" };
+    let separator = if useSeparator { ":" } else { "" };
 
     rsx! {
         div { class: "w-1/4 min-w-max",

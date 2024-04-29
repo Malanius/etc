@@ -1,58 +1,24 @@
-use core::str;
-use std::time::Duration;
-
-use chrono::{DateTime, Utc};
-use dioxus::prelude::*;
-use futures_timer::Delay;
 use crate::prelude::*;
+use dioxus::prelude::*;
 
-const DEADLINE: &str = "2024-05-11T00:00:00Z";
-
-
-fn calculate_color(hours_left: usize) -> f32 {
-    if hours_left > 336 {
-        return 120.0;
-    }
-
-    let hue_start = 120.0; // Green
-    let hue_end = 0.0; // Red
-
-    hue_start - (hue_start - hue_end) * ((336 - hours_left) as f32 / 336.0)
+#[derive(Props, Clone, PartialEq)]
+pub struct TimerProps {
+    remaining_days: String,
+    remaining_hours: String,
+    remaining_minutes: String,
+    remaining_seconds: String,
+    timer_style: String,
 }
 
-
-
 #[component]
-pub fn Timer() -> Element {
-    let time = use_signal(|| chrono::Utc::now().to_string());
-    let deadline: DateTime<Utc> = DEADLINE.parse().expect("failed to parse deadline");
-
-    use_effect(move || {
-        let mut time = time.clone();
-        spawn(async move {
-            loop {
-                Delay::new(Duration::from_secs(1)).await;
-                time.set(chrono::Utc::now().to_string());
-                // Move by day each second for testing purposes
-                // let virtual_clock: DateTime<Utc> =
-                //     time.read().parse().expect("failed to parse time");
-                // time.set((virtual_clock + chrono::Duration::days(1)).to_string());
-            }
-        });
-    });
-
-    let now: DateTime<Utc> = time.read().parse().expect("failed to parse time");
-    let delta = deadline - now;
-    let remaining_days = format!("{:02}", delta.num_days());
-    let remaining_hours = format!("{:02}", delta.num_hours() % 24);
-    let remaining_minutes = format!("{:02}", delta.num_minutes() % 60);
-    let remaining_seconds = format!("{:02}", delta.num_seconds() % 60);
-
-    let counter_hue = calculate_color(delta.num_hours() as usize);
-    let counter_saturation = 100; // Full saturation
-    let counter_lightness = 50; // Normal lightness
-    let timer_style =
-        format!("color: hsl({counter_hue}, {counter_saturation}%, {counter_lightness}%);");
+pub fn Timer(props: TimerProps) -> Element {
+    let TimerProps {
+        remaining_days,
+        remaining_hours,
+        remaining_minutes,
+        remaining_seconds,
+        timer_style,
+    } = props;
 
     rsx! {
         div {
