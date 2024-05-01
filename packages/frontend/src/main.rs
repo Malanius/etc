@@ -7,16 +7,10 @@ use dioxus::prelude::*;
 use futures_timer::Delay;
 use log::LevelFilter;
 
-mod credits;
-mod terrors;
-mod timer;
-mod timer_digit;
+mod components;
 
 mod prelude {
-    pub use crate::credits::*;
-    pub use crate::terrors::*;
-    pub use crate::timer::*;
-    pub use crate::timer_digit::*;
+    pub use crate::components::prelude::*;
 }
 
 use prelude::*;
