@@ -7,11 +7,13 @@ pub fn Credits() -> Element {
     rsx! {
         div { class: "block absolute bottom-5 right-5 text-gray-600 font-base ",
             div {
-                "made with {emoji} by "
+                "made with "
+                a { href: "https://github.com/Malanius/etc/tree/main/packages/frontend",
+                    "{emoji}"
+                }
+                " by "
                 span { class: "underline decoration-gray-500",
-                    a { href: "https://github.com/Malanius/etc/tree/main/packages/frontend",
-                        "malanius"
-                    }
+                    a { href: "https://github.com/Malanius", "malanius" }
                 }
             }
         }
