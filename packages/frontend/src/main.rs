@@ -52,35 +52,54 @@ fn App() -> Element {
             loop {
                 Delay::new(Duration::from_secs(1)).await;
                 time.set(chrono::Utc::now().to_string());
-                // Move by day each second for testing purposes
+                // Move time faster for testing purposes
                 // let virtual_clock: DateTime<Utc> =
                 //     time.read().parse().expect("failed to parse time");
-                // time.set((virtual_clock + chrono::Duration::days(1)).to_string());
+                // time.set((virtual_clock + chrono::Duration::hours(1)).to_string());
             }
         });
     });
 
     let now: DateTime<Utc> = time.read().parse().expect("failed to parse time");
-    let delta = deadline - now;
+    let delta_down = deadline - now;
+    let delta_up = now - deadline;
 
-    if delta.num_seconds() <= 0 {
+    if delta_down.num_seconds() <= 0 {
+        let elapsed_days = format!("{:02}", delta_up.num_days());
+        let elapsed_hours = format!("{:02}", delta_up.num_hours() % 24);
+        let elapsed_minutes = format!("{:02}", delta_up.num_minutes() % 60);
+        let elapsed_seconds = format!("{:02}", delta_up.num_seconds() % 60);
+        let counter_hue = calculate_color(delta_up.num_hours() as usize);
+        let timer_style =
+            format!("color: hsl({counter_hue}, {COUNTER_SATURATION}%, {COUNTER_LIGHTNESS}%);");
+
         return rsx! {
             div { class: "bg-black h-screen flex flex-col items-center justify-center text-white px-2",
                 h1 { class: "text-xl sm:text-2xl md:text-4xl font-bold mb-3 sm:mb-4 md:mb-6",
                     "さよなら, suckers。"
                 }
+                h2 { class: "text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6",
+                    "Do you miss me already? It just has been:"
+                }
+                Timer {
+                    days: elapsed_days,
+                    hours: elapsed_hours,
+                    minutes: elapsed_minutes,
+                    seconds: elapsed_seconds,
+                    timer_style
+                }
             }
         };
     }
 
-    let counter_hue = calculate_color(delta.num_hours() as usize);
+    let counter_hue = calculate_color(delta_down.num_hours() as usize);
     let timer_style =
         format!("color: hsl({counter_hue}, {COUNTER_SATURATION}%, {COUNTER_LIGHTNESS}%);");
 
-    let remaining_days = format!("{:02}", delta.num_days());
-    let remaining_hours = format!("{:02}", delta.num_hours() % 24);
-    let remaining_minutes = format!("{:02}", delta.num_minutes() % 60);
-    let remaining_seconds = format!("{:02}", delta.num_seconds() % 60);
+    let remaining_days = format!("{:02}", delta_down.num_days());
+    let remaining_hours = format!("{:02}", delta_down.num_hours() % 24);
+    let remaining_minutes = format!("{:02}", delta_down.num_minutes() % 60);
+    let remaining_seconds = format!("{:02}", delta_down.num_seconds() % 60);
 
     rsx! {
         div { class: "bg-black h-screen flex flex-col items-center justify-center text-white px-2",
@@ -92,10 +111,10 @@ fn App() -> Element {
                 "begin in:"
             }
             Timer {
-                remaining_days,
-                remaining_hours,
-                remaining_minutes,
-                remaining_seconds,
+                days: remaining_days,
+                hours: remaining_hours,
+                minutes: remaining_minutes,
+                seconds: remaining_seconds,
                 timer_style
             }
         }

@@ -3,20 +3,20 @@ use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct TimerProps {
-    remaining_days: String,
-    remaining_hours: String,
-    remaining_minutes: String,
-    remaining_seconds: String,
+    days: String,
+    hours: String,
+    minutes: String,
+    seconds: String,
     timer_style: String,
 }
 
 #[component]
 pub fn Timer(props: TimerProps) -> Element {
     let TimerProps {
-        remaining_days,
-        remaining_hours,
-        remaining_minutes,
-        remaining_seconds,
+        days,
+        hours,
+        minutes,
+        seconds,
         timer_style,
     } = props;
 
@@ -24,10 +24,10 @@ pub fn Timer(props: TimerProps) -> Element {
         div {
             style: "{timer_style}",
             class: "flex justify-center text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-6",
-            TimerDigit { value: remaining_days, label: "days", useSeparator: false }
-            TimerDigit { value: remaining_hours, label: "hours", useSeparator: true }
-            TimerDigit { value: remaining_minutes, label: "minutes", useSeparator: true }
-            TimerDigit { value: remaining_seconds, label: "seconds", useSeparator: true }
+            TimerDigit { value: days, label: "days", useSeparator: false }
+            TimerDigit { value: hours, label: "hours", useSeparator: true }
+            TimerDigit { value: minutes, label: "minutes", useSeparator: true }
+            TimerDigit { value: seconds, label: "seconds", useSeparator: true }
         }
     }
 }
