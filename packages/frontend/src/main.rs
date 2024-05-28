@@ -88,6 +88,7 @@ fn App() -> Element {
                     seconds: elapsed_seconds,
                     timer_style
                 }
+                Credits {}
             }
         };
     }
@@ -117,7 +118,7 @@ fn App() -> Element {
                 seconds: remaining_seconds,
                 timer_style
             }
+            Credits {}
         }
-        Credits {}
     }
 }
